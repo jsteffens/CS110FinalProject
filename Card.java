@@ -1,8 +1,7 @@
 /**
 Jack Steffens
 CS 110
-Homework 5-3
-Playing Card Game
+Final Project
 */
 
 
