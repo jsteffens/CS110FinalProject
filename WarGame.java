@@ -1,15 +1,48 @@
+import javax.swing.*;
+import java.awt.event.*;
+import java.awt.*;
+
 /**
 Jack Steffens
 CS 110
 Final Project
 */
 
-public class WarGame
+public class WarGame extends Game
 {
 
-   public static void main(String [] args) 
+   private JPanel panel;
+   private JLabel messageLabel;
+   private JButton button;
+   private final int WINDOW_WIDTH = 500;
+   private final int WINDOW_HEIGHT = 250;
+   
+   public WarGame()
    {
    
+      
+   
+   }
+   public void Method() 
+   {
+   
+   // set window title
+   setTitle("Om nom nom");
+   
+   // set window size
+   setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+   
+   // set  close operation
+   setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+   
+   // build the panel
+   buildPanel();
+   
+   // add panel
+   add(panel);
+   
+   // display window
+   setVisible(true);
    
    // variable for num cards in each pile
    int playerPile = 26;
@@ -22,16 +55,12 @@ public class WarGame
    // create a ListArrayListBased object for keeping track of current-round cards
    ListArrayListBased currentRound = new ListArrayListBased();
    
-   // create a deck of cards and shuffle them
-   Deck1 deck = new Deck1();
-   deck.shuffle();
-   
    // deal the cards into each player's pile (load into queue) until the deck is empty
-   while (!(deck.isEmpty()))
+   while (!(WarGame.deck.isEmpty()))
    {
    
-   playerQ.enqueue(deck.dealCard());
-   compQ.enqueue(deck.dealCard());
+   playerQ.enqueue(WarGame.deck.dealCard());
+   compQ.enqueue(WarGame.deck.dealCard());
    
    }
    
@@ -48,7 +77,7 @@ public class WarGame
    playerPile--;
    currentRound.add(1,compQ.dequeue());
    compPile--;
-   // if ranks are the same, add three more cards from each pile to the list, then compare next
+   // if ranks are the same, add another card from each pile to the list, then compare next
    if (((Card)currentRound.get(1)).equals((Card)currentRound.get(2)))
    {
    System.out.println("WAR!! Now put a card face down, and battle with the next card!"); 
@@ -294,6 +323,39 @@ public class WarGame
    
    }
          
+   }
+   
+   private void buildPanel()
+   {
+   
+      // create message label
+      messageLabel = new JLabel("woo");
+      
+      // create button
+      button = new JButton("OK");
+      
+      // add action listener
+      button.addActionListener(new ButtonListener());
+      
+      // create panel
+      panel = new JPanel();
+      
+      // add fields
+      panel.add(messageLabel);
+      panel.add(button);
+   
+   }
+   
+   private class ButtonListener implements ActionListener
+   {
+   
+      public void actionPerformed(ActionEvent e)
+      {
+      
+      setVisible(false);
+      
+      }
+   
    }
    
 }
