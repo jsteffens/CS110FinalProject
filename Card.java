@@ -60,7 +60,7 @@ private int rank;
    {
    
    if (rank==ACE)
-      return "Ace";
+      return "ace";
    if (rank==2)
       return "2";
    if (rank==3)
@@ -80,11 +80,11 @@ private int rank;
    if (rank==10)
       return "10";
    if (rank==JACK)
-      return "Jack";
+      return "jack";
    if (rank==QUEEN)
-      return "Queen";
+      return "queen";
    else
-      return "King";
+      return "king";
    
    }
    
@@ -96,13 +96,13 @@ private int rank;
    {
    
    if (suit==SPADES)
-      return "Spades";
+      return "spades";
    if (suit==HEARTS)
-      return "Hearts";
+      return "hearts";
    if (suit==DIAMONDS)
-      return "Diamonds";
+      return "diamonds";
    else
-      return "Clubs";
+      return "clubs";
    
    }
    

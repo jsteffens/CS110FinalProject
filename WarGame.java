@@ -11,6 +11,16 @@ Final Project
 public class WarGame extends Game
 {
 
+   // variable for num cards in each pile
+   int playerPile = 26;
+   int compPile = 26;
+   
+   // create a queue object for player and computer card piles
+   QueueReferenceBased playerQ = new QueueReferenceBased();
+   QueueReferenceBased compQ = new QueueReferenceBased();
+   
+   // create a ListArrayListBased object for keeping track of current-round cards
+   ListArrayListBased currentRound = new ListArrayListBased();
    private JPanel panel;
    private JLabel messageLabel;
    private JButton button;
@@ -26,34 +36,7 @@ public class WarGame extends Game
    public void Method() 
    {
    
-   // set window title
-   setTitle("Om nom nom");
-   
-   // set window size
-   setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-   
-   // set  close operation
-   setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-   
-   // build the panel
-   buildPanel();
-   
-   // add panel
-   add(panel);
-   
-   // display window
-   setVisible(true);
-   
-   // variable for num cards in each pile
-   int playerPile = 26;
-   int compPile = 26;
-   
-   // create a queue object for player and computer card piles
-   QueueReferenceBased playerQ = new QueueReferenceBased();
-   QueueReferenceBased compQ = new QueueReferenceBased();
-   
-   // create a ListArrayListBased object for keeping track of current-round cards
-   ListArrayListBased currentRound = new ListArrayListBased();
+
    
    // deal the cards into each player's pile (load into queue) until the deck is empty
    while (!(WarGame.deck.isEmpty()))
@@ -63,13 +46,17 @@ public class WarGame extends Game
    compQ.enqueue(WarGame.deck.dealCard());
    
    }
+            
+   }
    
-   try
+   protected void StartRound()
    {
       
-   
+   try
+   {
+         
    // start round if both piles have cards remaining
-   while (!playerQ.isEmpty() && !compQ.isEmpty())
+   if (!playerQ.isEmpty() && !compQ.isEmpty())
    {
    
    // add top card of each pile to currentRound list and compare them
@@ -77,10 +64,27 @@ public class WarGame extends Game
    playerPile--;
    currentRound.add(1,compQ.dequeue());
    compPile--;
+   
    // if ranks are the same, add another card from each pile to the list, then compare next
    if (((Card)currentRound.get(1)).equals((Card)currentRound.get(2)))
    {
-   System.out.println("WAR!! Now put a card face down, and battle with the next card!"); 
+   
+   String str1 = (((Card)currentRound.get(1)).rankString());
+   char str12 = (((Card)currentRound.get(1)).suitString()).charAt(0);
+   String str2 = (((Card)currentRound.get(2)).rankString());
+   char str22 = (((Card)currentRound.get(2)).suitString()).charAt(0);
+   
+   String str111 = str1+str12;
+   String str112 = str2+str22;
+   
+   ImageIcon icon1 = new ImageIcon("cardpics//"+ str111);
+   ImageIcon icon2 = new ImageIcon("cardpics//"+ str112);
+   
+   JLabel[] arr = {new JLabel("WAR!! Now put a card face down, and battle with the next card!", icon1, JLabel.LEFT), new JLabel(icon2)};
+
+   
+   JOptionPane.showMessageDialog(null, arr, "Who won?", JOptionPane.PLAIN_MESSAGE); 
+   
    // each player puts a card face-down
    currentRound.add(1,playerQ.dequeue());
    playerPile--;
@@ -96,7 +100,12 @@ public class WarGame extends Game
       if (((Card)currentRound.get(1)).equals(((Card)currentRound.get(2))))
       {
       
-         System.out.println("WAR!! You know what that means...");
+
+      
+         
+         JOptionPane.showMessageDialog(null, arr, "Who won?", JOptionPane.PLAIN_MESSAGE);
+         
+         
          // each player puts a card face-down
          currentRound.add(1,playerQ.dequeue());
          playerPile--;
@@ -112,7 +121,9 @@ public class WarGame extends Game
             if (((Card)currentRound.get(1)).equals(((Card)currentRound.get(2))))
             {
             
-                     System.out.println("WAR? What a coincidence");
+                   
+                                 
+                    
                      
                      // each player puts a card face-down
                      currentRound.add(1,playerQ.dequeue());
@@ -127,13 +138,13 @@ public class WarGame extends Game
                      compPile--;
                      
                      if (((Card)currentRound.get(1)).equals(((Card)currentRound.get(2))))
-                        System.out.println("Man, you need to shuffle these cards");
+                        JOptionPane.showMessageDialog(null, "Man, you need to shuffle these cards", "Who won?", JOptionPane.PLAIN_MESSAGE);
                         
                      else if (((Card)currentRound.get(1)).getRank() > ((Card)currentRound.get(2)).getRank())
                      {
                      
-                     System.out.println("Player: "+((Card)currentRound.get(2)).getRank()+
-                                       " Computer: "+((Card)currentRound.get(1)).getRank());
+                     JOptionPane.showMessageDialog(null, NamePrompt.name+ ": "+((Card)currentRound.get(2)).getRank()+
+                                       " Computer: "+((Card)currentRound.get(1)).getRank(), "Who won?", JOptionPane.PLAIN_MESSAGE);
                      
                      // add all elements to winner's queue
                      compPile += currentRound.size();
@@ -154,8 +165,8 @@ public class WarGame extends Game
                      else
                      {
                      
-                     System.out.println("Player: "+((Card)currentRound.get(2)).getRank()+
-                                       " Computer: "+((Card)currentRound.get(1)).getRank());
+                     JOptionPane.showMessageDialog(null, NamePrompt.name+ ": "+((Card)currentRound.get(2)).getRank()+
+                                       " Computer: "+((Card)currentRound.get(1)).getRank(), "Who won?", JOptionPane.PLAIN_MESSAGE);
                      
                      // add all elements to winner's queue
                      playerPile += currentRound.size();
@@ -178,8 +189,8 @@ public class WarGame extends Game
 
             {
             
-               System.out.println("Player: "+((Card)currentRound.get(2)).getRank()+
-                                       " Computer: "+((Card)currentRound.get(1)).getRank());
+               JOptionPane.showMessageDialog(null, NamePrompt.name+ ": "+((Card)currentRound.get(2)).getRank()+
+                                       " Computer: "+((Card)currentRound.get(1)).getRank(), "Who won?", JOptionPane.PLAIN_MESSAGE);
             
                // add all elements to winner's queue
                compPile += currentRound.size();
@@ -198,8 +209,8 @@ public class WarGame extends Game
             else
             {
             
-               System.out.println("Player: "+((Card)currentRound.get(2)).getRank()+
-                                       " Computer: "+((Card)currentRound.get(1)).getRank());
+               JOptionPane.showMessageDialog(null, NamePrompt.name+ ": "+((Card)currentRound.get(2)).getRank()+
+                                       " Computer: "+((Card)currentRound.get(1)).getRank(), "Who won?", JOptionPane.PLAIN_MESSAGE);
             
                // add all elements to winner's queue
                playerPile += currentRound.size();
@@ -220,8 +231,8 @@ public class WarGame extends Game
       else if (((Card)currentRound.get(1)).getRank() > ((Card)currentRound.get(2)).getRank())
       {
       
-         System.out.println("Player: "+((Card)currentRound.get(2)).getRank()+
-                                       " Computer: "+((Card)currentRound.get(1)).getRank());
+         JOptionPane.showMessageDialog(null, NamePrompt.name+ ": "+((Card)currentRound.get(2)).getRank()+
+                                       " Computer: "+((Card)currentRound.get(1)).getRank(), "Who won?", JOptionPane.PLAIN_MESSAGE);
       
          // add all elements to winner's queue
          compPile += currentRound.size();
@@ -240,8 +251,8 @@ public class WarGame extends Game
       else
       {
       
-         System.out.println("Player: "+((Card)currentRound.get(2)).getRank()+
-                                       " Computer: "+((Card)currentRound.get(1)).getRank());
+         JOptionPane.showMessageDialog(null, NamePrompt.name+ ": "+((Card)currentRound.get(2)).getRank()+
+                                       " Computer: "+((Card)currentRound.get(1)).getRank(), "Who won?", JOptionPane.PLAIN_MESSAGE);
       
          // add all elements to winner's queue
          playerPile += currentRound.size();
@@ -262,8 +273,8 @@ public class WarGame extends Game
    else if (((Card)currentRound.get(1)).getRank() > ((Card)currentRound.get(2)).getRank())
    {
    
-      System.out.println("Player: "+((Card)currentRound.get(2)).getRank()+
-                                       " Computer: "+((Card)currentRound.get(1)).getRank());
+      JOptionPane.showMessageDialog(null, NamePrompt.name+ ": "+((Card)currentRound.get(2)).getRank()+
+                                       " Computer: "+((Card)currentRound.get(1)).getRank(), "Who won?", JOptionPane.PLAIN_MESSAGE);
    
       // add all elements to winner's queue
       compPile += currentRound.size();
@@ -282,8 +293,8 @@ public class WarGame extends Game
    else
    {
    
-      System.out.println("Player: "+((Card)currentRound.get(2)).getRank()+
-                                       " Computer: "+((Card)currentRound.get(1)).getRank());
+      JOptionPane.showMessageDialog(null, NamePrompt.name+ ": "+((Card)currentRound.get(2)).getRank()+
+                                       " Computer: "+((Card)currentRound.get(1)).getRank(), "Who won?", JOptionPane.PLAIN_MESSAGE);
    
       // add all elements to winner's queue
       playerPile += currentRound.size();
@@ -302,60 +313,27 @@ public class WarGame extends Game
    
    // see if either player has lost after each iteration
    if (playerQ.isEmpty())
-      System.out.println("Computer Wins!");
+      JOptionPane.showMessageDialog(null, "Computer Wins!", "Who won?", JOptionPane.PLAIN_MESSAGE);
       
    if (compQ.isEmpty())
-      System.out.println("Player Wins!");
+      JOptionPane.showMessageDialog(null, NamePrompt.name+ " Wins!", "Who won?", JOptionPane.PLAIN_MESSAGE);
    
    }
-      
-
+   
    }
    
    catch (QueueException e)
    {
    
    if (playerQ.isEmpty())
-      System.out.println("Computer Wins!");
+      JOptionPane.showMessageDialog(null, "Computer Wins!", "Who won?", JOptionPane.PLAIN_MESSAGE);
    
    if (compQ.isEmpty())
-      System.out.println("Player Wins!");
+      JOptionPane.showMessageDialog(null, NamePrompt.name+ " Wins!", "Who won?", JOptionPane.PLAIN_MESSAGE);
    
    }
-         
-   }
-   
-   private void buildPanel()
-   {
-   
-      // create message label
-      messageLabel = new JLabel("woo");
-      
-      // create button
-      button = new JButton("OK");
-      
-      // add action listener
-      button.addActionListener(new ButtonListener());
-      
-      // create panel
-      panel = new JPanel();
-      
-      // add fields
-      panel.add(messageLabel);
-      panel.add(button);
+
    
    }
-   
-   private class ButtonListener implements ActionListener
-   {
-   
-      public void actionPerformed(ActionEvent e)
-      {
       
-      setVisible(false);
-      
-      }
-   
-   }
-   
 }

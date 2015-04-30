@@ -20,12 +20,15 @@ public class MainGame extends JFrame
    // create war game object
    public static WarGame game = new WarGame();
    
+   
    /**
    constructor that displays window
    */
    public MainGame()
    {
    
+      // call method
+      game.Method();
       
       // set title
       setTitle("WAR");
@@ -51,7 +54,7 @@ public class MainGame extends JFrame
    {
    
    messageLabel = new JLabel("Click button to battle oponent");
-   button = new JButton("WAR");
+   button = new JButton(new ImageIcon("cardpics//back.jpg"));
    button.addActionListener(new ButtonListener());
    panel = new JPanel();
    panel.add(messageLabel);
@@ -65,7 +68,7 @@ public class MainGame extends JFrame
       public void actionPerformed(ActionEvent e)
       {
       
-         MainGame.game.Method();
+         MainGame.game.StartRound();
       
       }
    

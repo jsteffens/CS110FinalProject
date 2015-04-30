@@ -7,18 +7,20 @@ CS 110
 Game Class
 
 This class is the superclass of all games
-it shuffles a new deck of cards and asks
-for the player's name
+it shuffles a new deck of cards
 */
 
 public class Game extends JFrame
 {
 
+   // create deck of cards variable
    protected static Deck1 deck;
+   
    /**
    This is the default constructor for all games that creates
    a deck and shuffles cards
    */
+   
    public Game()
    {
    
